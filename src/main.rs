@@ -2,6 +2,7 @@ use flw::*;
 
 fn main() {
     println!("Hello, world!");
-    let args = Arguments::run();
-    println!("{:?}", args);
+    let app = Arguments::run();
+    println!("{:?}", app);
+    app.run_command();
 }
