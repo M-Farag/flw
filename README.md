@@ -19,5 +19,5 @@ tasks:
 
 ### Usage
 ```bash
-flw -f <path to .yml file> -i <path to input file> -o <path to output file>
+flw -f <path to .yml file> -i <path to input file> -s <safe mode>
 ```
