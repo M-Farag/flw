@@ -12,7 +12,7 @@ pub struct Arguments {
 }
 
 impl Arguments {
-    pub fn run() -> Self {
+    pub fn get() -> Self {
         Arguments::parse()
     }
 

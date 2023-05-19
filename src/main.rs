@@ -2,7 +2,7 @@ use flw::*;
 
 fn main() {
     println!("Hello, world!");
-    let app = Arguments::run();
+    let app = Arguments::get();
     println!("{:?}", app);
     app.run_command();
 }
