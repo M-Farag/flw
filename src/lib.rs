@@ -1,4 +1,5 @@
 use clap::Parser;
+use task::Task;
 use crate::task::TaskList;
 use std::{fs, io::BufReader};
 
@@ -22,6 +23,12 @@ pub struct Runner {
     tasks_file: String,
     input_file: String,
     safe_mode: bool,
+}
+
+#[derive(Debug)]
+pub enum TaskOperation {
+    Replace,
+    Count
 }
 
 impl Runner {

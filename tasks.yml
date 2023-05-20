@@ -7,7 +7,7 @@ tasks:
       - count
       - word
   - data:
-      - replace
+      - hello
       - original
       - replace text
   - data:
