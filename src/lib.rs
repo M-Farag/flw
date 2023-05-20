@@ -1,7 +1,7 @@
 use clap::Parser;
-use task::Task;
+use task::*;
 use crate::task::TaskList;
-use std::{fs, io::BufReader};
+use std::{fs, io::{BufReader, BufWriter}};
 
 pub mod task;
 
@@ -25,11 +25,6 @@ pub struct Runner {
     safe_mode: bool,
 }
 
-#[derive(Debug)]
-pub enum TaskOperation {
-    Replace,
-    Count
-}
 
 impl Runner {
 
@@ -50,7 +45,16 @@ impl Runner {
 
         tasks.iter().for_each(
             |task| {
-                println!("{:?}", task);
+                if let Some(task_operation) = task.operation.as_ref() {
+                    match task_operation {
+                        TaskOperation::Replace => {
+                            println!("Replace in task: {:#?}", task);
+                        },
+                        TaskOperation::Count => {
+                            println!("Count in task: {:#?}", task);
+                        }
+                    }
+                }
             }
         );
     }
