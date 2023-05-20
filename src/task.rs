@@ -1,4 +1,4 @@
-use std::{fs::{self, File}, io::{BufRead, BufReader}};
+use std::{fs:: File, io::BufReader};
 
 use serde::Deserialize;
 use serde_yaml;
@@ -19,9 +19,6 @@ impl TaskList {
         let file_handler = File::open(tasks_file_path).unwrap();
         let file_buf_read = BufReader::new(file_handler);
         let task_list:TaskList = serde_yaml::from_reader(file_buf_read).unwrap();
-        for task in &task_list.tasks {
-            println!("{:?}", task);
-        }
         task_list.tasks
     }
 }

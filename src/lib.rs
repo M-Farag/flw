@@ -40,6 +40,12 @@ impl Runner {
         let tasks = TaskList::read_tasks(&self.tasks_file);
         let input_file_handler = fs::File::open(&self.input_file).unwrap();
         let input_file_buf_read = BufReader::new(input_file_handler);
+
+        tasks.iter().for_each(
+            |task| {
+                println!("{:?}", task);
+            }
+        );
     }
 }
 
