@@ -53,7 +53,7 @@ impl Runner {
                             process_replace_task(task);
                         },
                         TaskOperation::Count => {
-                            println!("Count in task: {:#?}", task);
+                            process_count_task(task);
                         }
                     }
                 }
@@ -75,6 +75,19 @@ impl Runner {
             }
 
             fs::rename("tmp_output.txt", "tmp_input.txt").unwrap();
+        }
+
+        fn process_count_task(task: &Task) {
+            let mut count = 0;
+            let input_file = fs::File::open("tmp_input.txt").unwrap();
+            let input_file_buf_reader = BufReader::new(input_file);
+
+            for line in input_file_buf_reader.lines()
+            {
+                let line = line.unwrap();
+                count += line.split_whitespace().filter(|&w| { w == task.data[0] }).count();
+            }
+            println!("Word: {} was found: {}",task.data[0],count);
         }
     }
 }

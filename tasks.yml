@@ -1,69 +1,10 @@
 tasks:
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - hello
-      - original
-      - replace text
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - replace
-      - original
-      - replace text
-  - data:
-      - count
-      - word
-  - data:
-      - replace
-      - original
-      - replace text
+    - data:
+        - replace
+        - mina
+        - munchy
+    - data:
+        - count
+        - munchy
 
 
