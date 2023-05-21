@@ -1,6 +1,5 @@
 use clap::Parser;
-use task::*;
-use crate::task::TaskList;
+use crate::task::{TaskOperation, TaskList, Task};
 use std::{fs, io::{BufReader, BufWriter}};
 
 pub mod task;
@@ -40,9 +39,10 @@ impl Runner {
 
     pub fn run(&self) {
         let tasks = TaskList::read_tasks(&self.tasks_file);
-        let input_file_handler = fs::File::open(&self.input_file).unwrap();
-        let input_file_buf_read = BufReader::new(input_file_handler);
-
+        
+        // Copy the input file to a temporary file that will be used for the operations
+        fs::copy(&self.input_file, "tmp_input.txt").unwrap();
+        
         tasks.iter().for_each(
             |task| {
                 if let Some(task_operation) = task.operation.as_ref() {
