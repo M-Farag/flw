@@ -23,7 +23,6 @@ struct Arguments {
 pub struct Runner {
     tasks_file: String,
     input_file: String,
-    safe_mode: bool,
 }
 
 
@@ -35,7 +34,6 @@ impl Runner {
         Runner {
             tasks_file: args.tasks_file,
             input_file: args.input_file,
-            safe_mode: args.safe_mode,
         }
     }
 
