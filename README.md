@@ -23,3 +23,11 @@ tasks:
 ```bash
 flw -f <path to .yml file> -i <path to input file>
 ```
+
+### Next Steps & Ideas
+- [ ] [WIP] Add support for replacing data within a CSV file with a good level of configurability (e.g. replace data in a specific column(s))
+
+### Technical todos
+- [ ] Add two types of the Runner module: one for txt files and one for csv files
+- [ ] Add tests for the Runner module(s)
+- [ ] Add a trait for the Runner module(s) to share common functionality like [run(),new()]
