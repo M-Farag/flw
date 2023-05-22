@@ -16,13 +16,14 @@ struct Arguments {
     #[arg(long, short='i')]
     input_file: String,
 
-    #[arg(long, short='s')]
-    safe_mode: bool,
+    #[arg(long, short='t', default_value = "txt")]
+    input_file_type: String
 }
 
 pub struct Runner {
     tasks_file: String,
     input_file: String,
+    input_file_type: String,
 }
 
 
@@ -34,6 +35,7 @@ impl Runner {
         Runner {
             tasks_file: args.tasks_file,
             input_file: args.input_file,
+            input_file_type: args.input_file_type,
         }
     }
 
