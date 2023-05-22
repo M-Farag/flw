@@ -31,3 +31,4 @@ flw -f <path to .yml file> -i <path to input file>
 - [ ] Add two types of the Runner module: one for txt files and one for csv files
 - [ ] Add tests for the Runner module(s)
 - [ ] Add a trait for the Runner module(s) to share common functionality like [run(),new()]
+- [ ] Accept a generic type for the data attribute within the tasks yaml schema
