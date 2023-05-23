@@ -33,8 +33,14 @@ impl FLW {
     }
     pub fn run(&self)
     {
-        let text_runner = TextRunner::new(self.arguments.tasks_file.clone(), self.arguments.input_file.clone());
-        text_runner.run();
+        match self.arguments.process_input_file_as.as_str() {
+            "txt" => {
+                let text_runner = TextRunner::new(self.arguments.tasks_file.clone(), self.arguments.input_file.clone());
+                text_runner.run();
+            },
+            _ => println!("Unsupported file type")
+        }
+        
     }
 }
 
