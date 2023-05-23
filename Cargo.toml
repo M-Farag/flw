@@ -9,6 +9,7 @@ description = "A command line tool for text processing"
 
 [dependencies]
 clap = {version="4.2.7", features=["derive"]}
+csv = "1.2.1"
 regex = "1.8.1"
 serde = {version="1.0.163", features=["derive"]}
 serde_yaml = "0.9.21"
