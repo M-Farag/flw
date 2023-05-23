@@ -1,5 +1,5 @@
-use flw::*;
+use flw::FLW;
 
 fn main() {
-    Runner::new().run();
+    FLW::new().run();
 }
