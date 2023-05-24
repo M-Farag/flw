@@ -1,4 +1,5 @@
 use clap::Parser;
+use runner::csv_runner::CsvRunner;
 use crate::runner::text_runner::TextRunner;
 use crate::runner::runner_trait::RunnerTrait;
 
@@ -37,6 +38,10 @@ impl FLW {
             "txt" => {
                 let text_runner = TextRunner::new(self.arguments.tasks_file.clone(), self.arguments.input_file.clone());
                 text_runner.run();
+            },
+            "csv" => {
+               let csv_runner = CsvRunner::new(self.arguments.tasks_file.clone(), self.arguments.input_file.clone());   
+                csv_runner.run();
             },
             _ => println!("Unsupported file type")
         }

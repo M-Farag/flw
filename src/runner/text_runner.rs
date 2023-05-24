@@ -12,7 +12,7 @@ pub struct TextRunner {
 }
 
 
-impl RunnerTrait for  TextRunner {
+impl RunnerTrait for TextRunner {
 
     fn new(tasks_file:String, input_file:String) -> Self
     {
