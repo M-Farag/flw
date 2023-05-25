@@ -1,4 +1,7 @@
-use super::runner_trait::RunnerTrait;
+use std::fs;
+
+use crate::task::{Task, TaskList, TaskOperation, self};
+use crate::runner::runner_trait::RunnerTrait;
 
 
 pub struct CsvRunner {
@@ -15,6 +18,21 @@ impl RunnerTrait for CsvRunner {
     }
 
     fn run(&self) {
-        println!("Running CSV runner");
+        let tasks = TaskList::read_tasks(&self.tasks_file);
+        fs::copy(&self.input_file, "tmp_input.csv").unwrap();
+        tasks.iter().for_each(|task|{
+            if let Some(task_operation) = task.operation.as_ref() {
+                match task_operation {
+                    TaskOperation::Replace => {
+                        println!("Replacing...");
+                    },
+                    TaskOperation::Count => {
+                        println!("Counting...");
+                    }
+                }
+            }
+        });
+
     }
+
 }
