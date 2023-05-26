@@ -6,6 +6,8 @@ use csv::{ReaderBuilder, WriterBuilder};
 use crate::task::{Task, TaskList, TaskOperation, self};
 use crate::runner::runner_trait::RunnerTrait;
 
+use std::collections::HashMap;
+
 
 pub struct CsvRunner {
     tasks_file: String,
@@ -50,7 +52,18 @@ impl RunnerTrait for CsvRunner {
 
             let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file);
             let task_data:&Vec<&str> = &task.data[0].split(',').collect();
-            
+
+            let headers = reader.headers().unwrap();
+
+            let column_indices: HashMap<_, _> = [task_data[0]].iter().enumerate().fold(HashMap::new(), |mut map, (index, &name)| {
+                if let Some(column_index) = headers.iter().position(|header| header == name) {
+                    map.insert(name, column_index);
+                }
+                map
+            });
+
+            println!("{:?}", column_indices);   
+
         }
 
     }
