@@ -1,4 +1,7 @@
+use std::fmt::Write;
 use std::fs;
+
+use csv::{ReaderBuilder, WriterBuilder};
 
 use crate::task::{Task, TaskList, TaskOperation, self};
 use crate::runner::runner_trait::RunnerTrait;
@@ -24,15 +27,34 @@ impl RunnerTrait for CsvRunner {
             if let Some(task_operation) = task.operation.as_ref() {
                 match task_operation {
                     TaskOperation::Replace => {
-                        println!("Replacing...");
-                    },
-                    TaskOperation::Count => {
-                        println!("Counting...");
+                        process_replace_task(task);
+                    },            
+                    _ => {
+                        println!("Not implemented yet");
                     }
                 }
             }
         });
 
+        fn process_replace_task(task: &Task) {
+            let input_file = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
+
+            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file);
+
+            let output_file = fs::OpenOptions::new()
+                .write(true)
+                .create(true)
+                .append(true)
+                .open("tmp_output.csv")
+                .unwrap();
+
+            let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file);
+            let task_data:&Vec<&str> = &task.data[0].split(',').collect();
+            
+        }
+
     }
+
+
 
 }
