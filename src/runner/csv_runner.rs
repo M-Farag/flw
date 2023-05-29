@@ -1,13 +1,11 @@
-use std::fmt::Write;
 use std::fs;
-use std::io::{BufRead, BufReader};
+use std::io::{BufReader, BufWriter};
 
 use csv::{ReaderBuilder, WriterBuilder, StringRecord};
 
-use crate::task::{Task, TaskList, TaskOperation, self};
+use crate::task::{Task, TaskList, TaskOperation};
 use crate::runner::runner_trait::RunnerTrait;
 
-use std::collections::HashMap;
 
 
 pub struct CsvRunner {
@@ -40,16 +38,22 @@ impl RunnerTrait for CsvRunner {
         });
 
         fn process_replace_task(task: &Task) {
+            println!("Processing replace task: {:?}", task.data.get(0));
            let input_file_handler = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
            let  input_file_buffer = BufReader::new(input_file_handler);
            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file_buffer); 
            
            let output_file_handler = fs::OpenOptions::new().write(true).create(true).append(true).open("tmp_output.csv").unwrap();
-           let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file_handler);
+           let output_file_buffer = BufWriter::new(output_file_handler);
+           let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file_buffer);
 
             // printing headers
             let headers = reader.headers().unwrap();            
-
+            // ToDo
+            // Map the headers & indexes to a hashmap
+            // Dynamically get the index
+            // Write the modified data to the output file
+            
             // printing first column
             for record in reader.records() {
                 let mut record = record.unwrap();
@@ -63,8 +67,13 @@ impl RunnerTrait for CsvRunner {
                     }
                 ).collect();
 
-                
-                writer.write_record(&modified_record).unwrap();
+                // println!("{:?}", modified_record);
+                // let modified_record_string_record = StringRecord::from(modified_record);
+                // writer.write_record(record.iter().chain(modified_record_string_record.iter())).unwrap();
+                // writer.write_record(&modified_record.get(2)).unwrap();
+                // let modified_record = modified_record.iter().map(|field| field.as_str()).collect::<Vec<&str>>();
+                // let modified_record_string_record = StringRecord::from(&modified_record.ge(2));
+                // writer.write_record(record.iter().chain(modified_record_string_record.iter())).unwrap();
             }
             writer.flush().unwrap();
 
