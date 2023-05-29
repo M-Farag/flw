@@ -2,7 +2,7 @@ use std::fmt::Write;
 use std::fs;
 use std::io::{BufRead, BufReader};
 
-use csv::{ReaderBuilder, WriterBuilder};
+use csv::{ReaderBuilder, WriterBuilder, StringRecord};
 
 use crate::task::{Task, TaskList, TaskOperation, self};
 use crate::runner::runner_trait::RunnerTrait;
@@ -40,22 +40,35 @@ impl RunnerTrait for CsvRunner {
         });
 
         fn process_replace_task(task: &Task) {
-           let input_file_handler = fs::OpenOptions::new().read(true).write(true).open("tmp_input.csv").unwrap();
+           let input_file_handler = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
            let  input_file_buffer = BufReader::new(input_file_handler);
            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file_buffer); 
+           
+           let output_file_handler = fs::OpenOptions::new().write(true).create(true).append(true).open("tmp_output.csv").unwrap();
+           let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file_handler);
 
             // printing headers
             let headers = reader.headers().unwrap();            
 
             // printing first column
             for record in reader.records() {
-                let record = record.unwrap();
-                println!("{}", record.get(2).unwrap());
+                let mut record = record.unwrap();
+                // Modify record
+                let modified_record:Vec<String> = record.iter().enumerate().map(
+                    |(i,field)| {
+                        if i == 2 {
+                            return format!("prefixed_{}",field)
+                        }
+                        field.to_string()
+                    }
+                ).collect();
+
+                
+                writer.write_record(&modified_record).unwrap();
             }
-            
+            writer.flush().unwrap();
 
-        }
-
+       }
     }
 
 
