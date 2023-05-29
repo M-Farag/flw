@@ -1,5 +1,6 @@
 use std::fmt::Write;
 use std::fs;
+use std::io::{BufRead, BufReader};
 
 use csv::{ReaderBuilder, WriterBuilder};
 
@@ -39,30 +40,19 @@ impl RunnerTrait for CsvRunner {
         });
 
         fn process_replace_task(task: &Task) {
-            let input_file = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
+           let input_file_handler = fs::OpenOptions::new().read(true).write(true).open("tmp_input.csv").unwrap();
+           let  input_file_buffer = BufReader::new(input_file_handler);
+           let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file_buffer); 
 
-            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file);
+            // printing headers
+            let headers = reader.headers().unwrap();            
 
-            let output_file = fs::OpenOptions::new()
-                .write(true)
-                .create(true)
-                .append(true)
-                .open("tmp_output.csv")
-                .unwrap();
-
-            let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file);
-            let task_data:&Vec<&str> = &task.data[0].split(',').collect();
-
-            let headers = reader.headers().unwrap();
-
-            let column_indices: HashMap<_, _> = [task_data[0]].iter().enumerate().fold(HashMap::new(), |mut map, (index, &name)| {
-                if let Some(column_index) = headers.iter().position(|header| header == name) {
-                    map.insert(name, column_index);
-                }
-                map
-            });
-
-            println!("{:?}", column_indices);   
+            // printing first column
+            for record in reader.records() {
+                let record = record.unwrap();
+                println!("{}", record.get(2).unwrap());
+            }
+            
 
         }
 
