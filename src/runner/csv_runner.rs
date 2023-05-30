@@ -1,10 +1,11 @@
 use std::fs;
 use std::io::{BufReader, BufWriter};
-
-use csv::{ReaderBuilder, WriterBuilder, StringRecord};
+use regex::Regex;
+use csv::{ReaderBuilder, WriterBuilder};
 
 use crate::task::{Task, TaskList, TaskOperation};
 use crate::runner::runner_trait::RunnerTrait;
+
 
 
 
@@ -38,7 +39,6 @@ impl RunnerTrait for CsvRunner {
         });
 
         fn process_replace_task(task: &Task) {
-            println!("Processing replace task: {:?}", task.data.get(0));
            let input_file_handler = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
            let  input_file_buffer = BufReader::new(input_file_handler);
            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file_buffer); 
@@ -59,8 +59,11 @@ impl RunnerTrait for CsvRunner {
                 // Modify record
                 let modified_record:Vec<String> = record.iter().enumerate().map(
                     |(i,field)| {
-                        if i == 2 {
-                            return format!("prefixed_{}",field)
+                        
+                        if i == 1 {
+                            let pattern = Regex::new(&task.data[1]).unwrap();
+                            let field_replaced = pattern.replace_all(&field, &task.data[2]);
+                            return format!("{}", field_replaced);
                         }
                         field.to_string()
                     }
