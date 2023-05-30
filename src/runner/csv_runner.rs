@@ -52,7 +52,6 @@ impl RunnerTrait for CsvRunner {
             // ToDo
             // Map the headers & indexes to a hashmap
             // Dynamically get the index
-            // Write the modified data to the output file
             
             // printing first column
             for record in reader.records() {
@@ -67,16 +66,10 @@ impl RunnerTrait for CsvRunner {
                     }
                 ).collect();
 
-                // println!("{:?}", modified_record);
-                // let modified_record_string_record = StringRecord::from(modified_record);
-                // writer.write_record(record.iter().chain(modified_record_string_record.iter())).unwrap();
-                // writer.write_record(&modified_record.get(2)).unwrap();
-                // let modified_record = modified_record.iter().map(|field| field.as_str()).collect::<Vec<&str>>();
-                // let modified_record_string_record = StringRecord::from(&modified_record.ge(2));
-                // writer.write_record(record.iter().chain(modified_record_string_record.iter())).unwrap();
+                writer.write_record(&modified_record).unwrap();
             }
             writer.flush().unwrap();
-
+            fs::rename("tmp_output.csv", "tmp_input.csv").unwrap();
        }
     }
 

@@ -2,6 +2,5 @@ tasks:
     - data: #This task is related to CSV processing
         - replace
         - first_name,old_value,new_value
-        - last_name,old_value,new_value
 
 
