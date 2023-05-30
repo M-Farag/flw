@@ -1,8 +1,9 @@
 use std::fs;
+use std::hash::Hash;
 use std::io::{BufReader, BufWriter};
 use regex::Regex;
 use csv::{ReaderBuilder, WriterBuilder};
-
+use std::collections::HashMap;
 use crate::task::{Task, TaskList, TaskOperation};
 use crate::runner::runner_trait::RunnerTrait;
 
@@ -48,19 +49,23 @@ impl RunnerTrait for CsvRunner {
            let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file_buffer);
 
             // printing headers
-            let headers = reader.headers().unwrap();            
+            let headers = reader.headers().unwrap();
+            let mut headers_indexes:HashMap<String,usize> = HashMap::new();
+            for (i,header) in headers.iter().enumerate() {
+                headers_indexes.insert(header.to_string(),i);
+            }
+
             // ToDo
-            // Map the headers & indexes to a hashmap
+            // Write headers to the output file
             // Dynamically get the index
-            
+            let requested_column_index = *headers_indexes.get(&task.data[0]).unwrap();
             // printing first column
             for record in reader.records() {
-                let mut record = record.unwrap();
+                let record = record.unwrap();
                 // Modify record
                 let modified_record:Vec<String> = record.iter().enumerate().map(
                     |(i,field)| {
-                        
-                        if i == 1 {
+                        if i == requested_column_index {
                             let pattern = Regex::new(&task.data[1]).unwrap();
                             let field_replaced = pattern.replace_all(&field, &task.data[2]);
                             return format!("{}", field_replaced);
