@@ -1,5 +1,4 @@
 use std::fs;
-use std::hash::Hash;
 use std::io::{BufReader, BufWriter};
 use regex::Regex;
 use csv::{ReaderBuilder, WriterBuilder};
@@ -48,18 +47,19 @@ impl RunnerTrait for CsvRunner {
            let output_file_buffer = BufWriter::new(output_file_handler);
            let mut writer = WriterBuilder::new().has_headers(true).from_writer(output_file_buffer);
 
-            // printing headers
+            // Processing headers
             let headers = reader.headers().unwrap();
             let mut headers_indexes:HashMap<String,usize> = HashMap::new();
             for (i,header) in headers.iter().enumerate() {
                 headers_indexes.insert(header.to_string(),i);
             }
 
-            // ToDo
+            
             // Write headers to the output file
-            // Dynamically get the index
-            let requested_column_index = *headers_indexes.get(&task.data[0]).unwrap();
-            // printing first column
+            writer.write_record(reader.headers().unwrap()).unwrap();
+            writer.flush().unwrap();
+
+            let requested_column_index = *headers_indexes.get(&task.data[0]).unwrap();            
             for record in reader.records() {
                 let record = record.unwrap();
                 // Modify record

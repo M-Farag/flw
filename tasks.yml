@@ -2,5 +2,30 @@ tasks:
     - data: #This task is related to CSV processing
         - replace
         - first_name
-        - Matthew
-        - Matt
+        - Stacey
+        - STC
+    - data: #This task is related to CSV processing
+        - replace
+        - first_name
+        - Todd
+        - TD
+    - data:
+        - replace
+        - last_name
+        - Flowers
+        - flowery
+    - data:
+        - replace
+        - email
+        - gmail
+        - google
+    - data:
+        - replace
+        - email
+        - yahoo
+        - microsoft
+    - data:
+        - replace
+        - email
+        - .com
+        - .test
