@@ -1,0 +1,12 @@
+tasks:
+    - data: #This task is related to TXT processing
+        - replace # command
+        - Stacey # original value
+        - STC # new value
+    - data:
+        - replace # command
+        - Travis # original value
+        - TV # new value
+    - data:
+        - count # command
+        - word # What to count

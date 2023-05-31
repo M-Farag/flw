@@ -78,6 +78,7 @@ impl RunnerTrait for CsvRunner {
             }
             writer.flush().unwrap();
             fs::rename("tmp_output.csv", "tmp_input.csv").unwrap();
+            println!("Task {:?} completed", task);
        }
     }
 

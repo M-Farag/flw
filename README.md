@@ -36,7 +36,7 @@ tasks:
 
 ### Usage
 ```bash
-flw -f <path to the tasks .yml file> -i <path to input file> -t <type of file: txt or csv>
+flw -f <path to the tasks .yml file> -i <path to input file you want to process> -t <type of file: txt or csv>
 
 ### Example for TXT
 flw -f tasks.yml -i input.txt -t txt

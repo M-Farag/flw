@@ -1,0 +1,21 @@
+tasks:
+    - data: #This task is related to CSV processing
+        - replace # command
+        - first_name #column name
+        - Travis # original value
+        - TV # new value
+    - data:
+        - replace # command
+        - first_name #column name
+        - Todd # original value
+        - TD # new value
+    - data:
+        - replace
+        - last_name
+        - Flowers
+        - flowery
+    - data:
+        - replace
+        - email
+        - .com
+        - .test
