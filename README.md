@@ -2,7 +2,7 @@
 Process text using configurable tasks.
 The CLI app can read tasks from any .yml file that follow the task schema.
 
-### Task Schema
+### Text Task Schema
 ```yaml
 tasks:
   - data:
@@ -14,21 +14,39 @@ tasks:
       - word # word to count
 ```
 
+### CSV Task Schema
+```yaml 
+tasks:
+  - data:
+    - replace # command to replace text
+    - column_name # column to replace text in
+    - original # text to replace
+    - replace text # text to replace with
+  - data:
+    - replace # command to replace text
+    - column_name # column to replace text in
+    - original # text to replace
+    - replace text # text to replace with
+```
+
 ### Available Commands [WIP: more to come]
-- replace
-- count
+- Replace # on txt and csv
+- Count # on txt only
 
 
 ### Usage
 ```bash
-flw -f <path to .yml file> -i <path to input file>
+flw -f <path to the tasks .yml file> -i <path to input file> -t <type of file: txt or csv>
+
+### Example for TXT
+flw -f tasks.yml -i input.txt -t txt
+
+### Example for CSV
+flw -f tasks.yml -i input.csv -t csv
 ```
 
-### Next Steps & Ideas
-- [ ] [WIP] Add support for replacing data within a CSV file with a good level of configurability (e.g. replace data in a specific column(s))
-
-### Technical todos
-- [x] Add two types of the Runner module: one for txt files and one for csv files
+### Technical ToDos
 - [ ] Add tests for the Runner module(s)
-- [x] Add a trait for the Runner module(s) to share common functionality like [run(),new()]
-- [ ] Add logic to control the execution flow based on the file type
+- [ ] Enhance the CSV Task processing for better performance
+- [ ] Enhance the Error handling for better error messages
+
