@@ -5,7 +5,7 @@ use csv::{ReaderBuilder, WriterBuilder};
 use std::collections::HashMap;
 use crate::task::{Task, TaskList, TaskOperation};
 use crate::runner::runner_trait::RunnerTrait;
-
+use std::time::Instant;
 
 
 
@@ -29,7 +29,11 @@ impl RunnerTrait for CsvRunner {
             if let Some(task_operation) = task.operation.as_ref() {
                 match task_operation {
                     TaskOperation::Replace => {
+                        println!("Starting task {:?}", task);
+                        let time_start = Instant::now();
                         process_replace_task(task);
+                        println!("Task {:?} completed in {:?}", task, time_start.elapsed());
+
                     },            
                     _ => {
                         println!("Not implemented yet");
@@ -39,6 +43,8 @@ impl RunnerTrait for CsvRunner {
         });
 
         fn process_replace_task(task: &Task) {
+            
+
            let input_file_handler = fs::OpenOptions::new().read(true).open("tmp_input.csv").unwrap();
            let  input_file_buffer = BufReader::new(input_file_handler);
            let mut reader = ReaderBuilder::new().has_headers(true).from_reader(input_file_buffer); 
