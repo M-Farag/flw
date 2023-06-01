@@ -71,7 +71,7 @@ impl RunnerTrait for CsvRunner {
                 // Modify record
                 let modified_record:Vec<String> = record.iter().enumerate().map(
                     |(i,field)| {
-                        if i == requested_column_index {
+                        if i == requested_column_index && field == &task.data[1] {
                             let pattern = Regex::new(&task.data[1]).unwrap();
                             let field_replaced = pattern.replace_all(&field, &task.data[2]);
                             return format!("{}", field_replaced);
@@ -84,7 +84,6 @@ impl RunnerTrait for CsvRunner {
             }
             writer.flush().unwrap();
             fs::rename("tmp_output.csv", "tmp_input.csv").unwrap();
-            println!("Task {:?} completed", task);
        }
     }
 
